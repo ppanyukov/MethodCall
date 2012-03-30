@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>MethodCall</id>
+    <version>1.0.0</version>
+    <authors>panyukop</authors>
+    <owners>panyukop</owners>
+    <projectUrl>https://github.com/ppanyukov/MethodCall</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Utility for accessing private methods, properties and fields. Handy for unit tests.</description>
+    <releaseNotes>First release</releaseNotes>
+    <copyright>Copyright 2012</copyright>
+    <tags>reflection testing</tags>
+    <dependencies>
+    </dependencies>
+  </metadata>
+</package>
