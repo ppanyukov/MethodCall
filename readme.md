@@ -7,4 +7,8 @@ Runs with .NET Framework 2.0.
 
 Uses reflection.
 
+Published to nuget.org here [https://nuget.org/packages/MethodCall](https://nuget.org/packages/MethodCall).
+
+
+
 
