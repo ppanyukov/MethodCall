@@ -1,0 +1,8 @@
+packages
+[Bb]in/
+[Oo]bj/
+_ReSharper.MethodCall
+*.user
+*.suo
+*.swp
+StyleCop.Cache
