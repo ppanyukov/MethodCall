@@ -151,6 +151,12 @@ namespace MethodCall
                 throw new ArgumentNullException("methodName");
             }
 
+            // Issue #1: fix for NullReferenceException with null values for params of dynamic types
+            if (args == null)
+            {
+                args = new object[0];
+            }
+
             Type[] paramTypes = new Type[args.Length];
             for (int i = 0; i < args.Length; ++i)
             {
