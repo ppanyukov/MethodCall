@@ -11,6 +11,8 @@
 // ReSharper disable SuggestUseVarKeywordEvident
 // ReSharper disable CheckNamespace
 
+using System;
+
 namespace MethodCall
 {
     using global::MethodCall.Tests;
@@ -147,6 +149,73 @@ namespace MethodCall
             Assert.That(
                 MethodCall.GetField(x, "baseInsField"),
                 Is.EqualTo("la la"));
+        }
+
+        [TestCase("Dynamic string", "dynamic string")]
+        [TestCase("Dynamic integer", 10)]
+        [TestCase("Dynamic null value", null)]
+        [Description("Issue #1: invoking static method with null dynamic parameter throws NullReferenceException")]
+        public void Issue_1_Dynamic_Static_Method_with_null_dynamic_parameter(string name, dynamic input)
+        {
+            // no throw
+            MethodCall.Invoke(typeof (BugWithNullType), "StaticMethodWithDynamic", input);
+        }
+
+        [TestCase("Dynamic string", "dynamic string")]
+        [TestCase("Dynamic integer", 10)]
+        [TestCase("Dynamic null value", null)]
+        [Description("Issue #1: invoking non-static method with null dynamic parameter throws NullReferenceException")]
+        public void Issue_1_Dynamic_NonStatic_Method_with_null_dynamic_parameter(string name, dynamic input)
+        {
+            // no throw
+            MethodCall.Invoke(new BugWithNullType(), "NonstaticMethodWithDynamic", input);
+        }
+
+        [TestCase("Non-dynamic string", "dynamic string")]
+        [TestCase("Non-dynamic null value", null)]
+        [Description(@"
+            Issue #1: invoking static method with non-dynamic 
+            null parameter throws method cannot be resolved,
+            when the target method's parameter type is anything else but object.")]
+        public void Issue_1_Nondynamic_Static_Method_with_null_non_dynamic_parameter(string name, string input)
+        {
+            // no throw
+            MethodCall.Invoke(typeof(BugWithNullType), "StaticMethodTraditional", input);
+        }
+
+        [TestCase("Non-dynamic string", "dynamic string")]
+        [TestCase("Non-dynamic null value", null)]
+        [Description(@"
+            Issue #1: invoking non-static method with non-dynamic 
+            null parameter throws method cannot be resolved,
+            when the target method's parameter type is anything else but object.")]
+        public void Issue_1_Nondynamic_NonStatic_Method_with_null_non_dynamic_parameter(string name, string input)
+        {
+            // no throw
+            MethodCall.Invoke(new BugWithNullType(), "NonstaticMethodTraditional", input);
+        }
+
+        internal sealed class BugWithNullType
+        {
+            public static dynamic StaticMethodWithDynamic(dynamic input)
+            {
+                return input;
+            }
+
+            public dynamic NonstaticMethodWithDynamic(dynamic input)
+            {
+                return input;
+            }
+
+            public static string StaticMethodTraditional(string input)
+            {
+                return input;
+            }
+
+            public string NonstaticMethodTraditional(string input)
+            {
+                return input;
+            }
         }
     }
 }
